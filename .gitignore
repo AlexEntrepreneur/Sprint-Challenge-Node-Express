@@ -62,3 +62,7 @@ typings/
 
 # VSCode settings
 .vscode/
+
+
+# Yarn auto-generated
+yarn.lock
