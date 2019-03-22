@@ -19,7 +19,7 @@ router.get('/:id', (req, res) => {
       res.json(data);
     })
     .catch(err => res.status(404).json({
-      message: "The post with the specified ID does not exist."
+      message: "The project with the specified ID does not exist."
     }));
 });
 
@@ -33,22 +33,22 @@ router.post('/', (req, res) => {
       })
       .catch(err => {
         res.status(500).json({
-          errorMessage: "Your post could not be added"
+          errorMessage: "Your project could not be added"
         })
       })
   }
   else {
     res.status(400).json({
-      errorMessage: "Please provide name and description fields for the post."
+      errorMessage: "Please provide name and description fields for the project."
     })
   }
 });
 
 router.put('/:id', (req, res) => {
-  const { name, description } = req.body;;
+  const { name, description, completed } = req.body;
 
-  if (name || description)  {
-    Projects.update(req.params.id, { name, description })
+  if (name || description || completed)  {
+    Projects.update(req.params.id, { name, description, completed })
     .then(data => {
       if (data) {
         Projects.get()
@@ -56,17 +56,17 @@ router.put('/:id', (req, res) => {
       }
       else {
         res.status(404).json({
-          message: "The post with the specified ID does not exist."
+          message: "The project with the specified ID does not exist."
         })
       }
     })
     .catch(err => res.status(400).json({
-      errorMessage: "The post failed to update."
+      errorMessage: "The project failed to update."
     }))
   }
   else {
     res.status(400).json({
-      errorMessage: "Please provide a new name or description for the post."
+      errorMessage: "Please provide a new name or description for the project."
     })
   }
 });
@@ -82,12 +82,12 @@ router.delete('/:id', (req, res) => {
       }
       else {
         res.status(404).json({
-          message: "The post with the specified ID does not exist."
+          message: "The project with the specified ID does not exist."
         })
       }
     })
     .catch(err => res.status(500).json({
-      error: "The post could not be removed"
+      error: "The project could not be removed"
     }));
 });
 
