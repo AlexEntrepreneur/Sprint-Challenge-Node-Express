@@ -23,6 +23,27 @@ router.get('/:id', (req, res) => {
     }));
 });
 
+router.get('/:id/actions', (req, res) => {
+  Projects.getProjectActions(req.params.id)
+    .then(data => {
+      if (data.length) {
+        res.json(data);
+      }
+      Projects.get(req.params.id)
+        .then(data => {
+          res.json({
+            message: "This project doesn't have any actions yet."
+          });
+        })
+        .catch(err => res.status(404).json({
+          message: "The project with the specified ID does not exist."
+        }));
+    })
+    .catch(err => res.status(404).json({
+      message: "The project with the specified ID does not exist."
+    }));
+});
+
 router.post('/', (req, res) => {
   const { name, description } = req.body;
   if (name && description) {
